@@ -8,13 +8,12 @@ interface SlugLayoutProps {
 }
 
 export async function generateMetadata({ params }: SlugLayoutProps): Promise<Metadata> {
-  const { slug } = await params;
   const supabase = await createServerSupabaseClient();
-  
+  const targetId = process.env.NEXT_PUBLIC_RESTAURANT_ID || '77bcca71-d69b-496d-831a-93ae38894645';
   const { data } = await supabase
     .from('restaurants')
     .select('name')
-    .eq('slug', slug)
+    .eq('id', targetId)
     .eq('is_active', true)
     .single();
 
@@ -26,13 +25,12 @@ export async function generateMetadata({ params }: SlugLayoutProps): Promise<Met
 }
 
 export default async function SlugLayout({ children, params }: SlugLayoutProps) {
-  const { slug } = await params;
   const supabase = await createServerSupabaseClient();
-
+  const targetId = process.env.NEXT_PUBLIC_RESTAURANT_ID || '77bcca71-d69b-496d-831a-93ae38894645';
   const { data } = await supabase
     .from('restaurants')
     .select('id, name, logo_url, brand_color_primary, brand_color_secondary')
-    .eq('slug', slug)
+    .eq('id', targetId)
     .eq('is_active', true)
     .single();
 

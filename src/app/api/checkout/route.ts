@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createAdminClient } from '@/lib/supabase/admin';
+import { SURAKI_ID } from '@/lib/supabase/client';
 // import { stripe } from '@/lib/stripe'; // In a real app we'd use stripe
 
 export async function POST(request: Request) {
@@ -15,7 +16,7 @@ export async function POST(request: Request) {
       const { data: custData, error: custErr } = await supabaseAdmin
         .from('customers')
         .upsert({
-          restaurant_id: restaurantId,
+          restaurant_id: SURAKI_ID,
           email: customer.email,
           name: customer.name,
           phone: customer.phone,
@@ -36,7 +37,7 @@ export async function POST(request: Request) {
     const { data: order, error: orderError } = await supabaseAdmin
       .from('orders')
       .insert({
-        restaurant_id: restaurantId,
+        restaurant_id: SURAKI_ID,
         table_id: tableId,
         customer_id: customerId,
         order_number: parseInt(orderNumber),

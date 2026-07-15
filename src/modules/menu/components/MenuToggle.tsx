@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { createClient } from '@/lib/supabase/client';
+import { createClient, SURAKI_ID } from '@/lib/supabase/client';
 import type { Product, Category } from '@/types/database';
 import { formatPrice } from '@/lib/utils';
 import { Search, UtensilsCrossed, Plus, FolderPlus, Edit2, Trash2, GripVertical } from 'lucide-react';
@@ -115,7 +115,7 @@ export function MenuToggle({ restaurantId }: MenuToggleProps) {
 
     const { error } = await supabase
       .from('categories')
-      .insert({ restaurant_id: restaurantId, name: name.trim() });
+      .insert({ restaurant_id: SURAKI_ID, name: name.trim() });
     
     if (error) alert('Error al crear la categoría');
     else loadMenu();

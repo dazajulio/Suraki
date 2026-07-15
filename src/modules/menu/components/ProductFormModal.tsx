@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import type { Category } from '@/types/database';
 import { X, Plus, Trash2 } from 'lucide-react';
-import { createClient } from '@/lib/supabase/client';
+import { createClient, SURAKI_ID } from '@/lib/supabase/client';
 
 interface ProductFormModalProps {
   isOpen: boolean;
@@ -136,7 +136,7 @@ export function ProductFormModal({
         const { data: productData, error: productError } = await supabase
           .from('products')
           .insert({
-            restaurant_id: restaurantId,
+            restaurant_id: SURAKI_ID,
             category_id: categoryId,
             name,
             description,
@@ -157,7 +157,7 @@ export function ProductFormModal({
         const { data: groupData, error: groupError } = await supabase
           .from('modifier_groups')
           .insert({
-            restaurant_id: restaurantId,
+            restaurant_id: SURAKI_ID,
             product_id: productId,
             name: group.name,
             is_required: group.is_required,

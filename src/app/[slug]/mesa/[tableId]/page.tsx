@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, use } from 'react';
-import { createClient } from '@/lib/supabase/client';
+import { createClient, SURAKI_ID } from '@/lib/supabase/client';
 import type { Category, ProductWithModifiers, Product } from '@/types/database';
 import { CategoryNav } from '@/modules/kiosk/components/CategoryNav';
 import { ProductCard } from '@/modules/kiosk/components/ProductCard';
@@ -164,7 +164,7 @@ export default function KioskPage({ params }: KioskPageProps) {
       const { data: newCust, error } = await supabase
         .from('customers')
         .insert({
-          restaurant_id: restaurantId || '',
+          restaurant_id: SURAKI_ID,
           name: data.name,
           email: data.email,
           phone: data.phone || null
@@ -208,7 +208,7 @@ export default function KioskPage({ params }: KioskPageProps) {
     const { data: order, error: orderError } = await supabase
       .from('orders')
       .insert({
-        restaurant_id: restaurantId || '',
+        restaurant_id: SURAKI_ID,
         table_id: (tableId && tableId !== 'takeaway' && isValidUUID(tableId)) ? tableId : null,
         customer_id: customerId || null,
         status: 'pending',
